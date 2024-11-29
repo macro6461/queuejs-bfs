@@ -22,6 +22,8 @@ jobs:
         run: |
           git fetch
           git fetch --tags
+          git config --global user.email "mattcroak718@gmail.com"
+          git config --global user.name "macro6461"
 
       - name: Run version update script
         run: |
@@ -29,8 +31,6 @@ jobs:
 
       - name: Commit and push changes (if applicable)
         run: |
-          git config --global user.email "mattcroak718@gmail.com"
-          git config --global user.name "macro6461"
           git add .
           git commit -m "New update for queuejs-bfs"
           git push origin main  # Or to your desired branch
