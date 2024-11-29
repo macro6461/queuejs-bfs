@@ -70,6 +70,25 @@ def update_versions():
     
     with open('package.json', 'w') as file:
         json.dump(package_data, file, indent=4)
+    tag_repo(version, "Updated to version " + version + '.')
+
+
+def tag_repo(tag_name, message=None):
+    # Create a new Git tag
+    try:
+        # Create the tag (you can add a message using '-m' if needed)
+        if message:
+            subprocess.run(["git", "tag", "-a", tag_name, "-m", message], check=True)
+        else:
+            subprocess.run(["git", "tag", tag_name], check=True)
+
+        # Push the tag to the remote repository
+        subprocess.run(["git", "push", "origin", tag_name], check=True)
+
+        print(f"Successfully tagged the repository with {tag_name}.")
+
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred while tagging the repository: {e}")
 
 if __name__ == "__main__":
     update_versions()
