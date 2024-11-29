@@ -16,6 +16,11 @@ jobs:
         with:
           python-version: "3" # You can specify a specific Python version if needed
 
+      - name: Fetch repo and all tags
+        run: |
+          git fetch
+          git fetch --tags
+
       - name: Run version update script
         run: |
           python ./buildscripts/update_versions.py
