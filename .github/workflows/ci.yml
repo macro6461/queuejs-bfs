@@ -1,4 +1,4 @@
-name: Publish NPM Package
+name: Update Versions, Tag Release, Publish NPM Package
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
 
       - name: Run version update script
         run: |
-          python update_versions.py
+          python ./update_versions.py
 
       - name: Commit and push changes (if applicable)
         run: |
@@ -27,3 +27,25 @@ jobs:
           git add .
           git commit -m "New update for queuejs-bfs"
           git push origin main  # Or to your desired branch
+
+  tag-new-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3" # You can specify a specific Python version if needed
+
+      - name: Run version update script
+        run: |
+          python ./tag_repo.py
+
+      - name: Commit and push changes (if applicable)
+        run: |
+          git config --global user.email "mattcroak718@gmail.com"
+          git config --global user.name "macro6461"
+          git push --tags
