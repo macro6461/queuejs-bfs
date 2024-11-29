@@ -52,7 +52,8 @@ def update_versions(version=None):
         package_data['version'] = version
         with open('package.json', 'w') as file:
             json.dump(package_data, file, indent=4)
-
+        
+        print("VERSION: ", version)
         tag_repo(version, "Updated to version " + version + '.')
     else:
         print("No version found, cannot update versions.")
@@ -70,7 +71,7 @@ def tag_repo(tag_name, message=None):
                 subprocess.run(["git", "tag", tag_name], check=True)
 
         subprocess.run(["git", "push", "origin", tag_name], check=True)
-        print(f"{version}")
+        return tag_name
     except subprocess.CalledProcessError as e:
         print(f"An error occurred while tagging the repository: {e}")
 

@@ -31,9 +31,7 @@ jobs:
       - name: Run Python script to get version
         id: get_version
         run: |
-          echo "HELLO"
           VERSION=$(python ./buildscripts/update_versions.py)
-          echo "WORLD"
           echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
           echo "DEBUG: VERSION=$VERSION"  # Debugging line to check the version value
 
