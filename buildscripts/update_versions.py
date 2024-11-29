@@ -31,7 +31,6 @@ def get_git_version():
         
 
 def update_versions():
-
     version = get_git_version()
 
     # Example: Update version in README
