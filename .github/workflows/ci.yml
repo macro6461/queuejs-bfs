@@ -37,11 +37,16 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
           echo "DEBUG: VERSION=$VERSION"  # Debugging line to check the version value
 
+      - name: Check if version is set
+        run: |
+          echo "VERSION=${{ env.VERSION }}"
+
       - name: Run version update script
         run: |
           python ./buildscripts/update_versions.py  # No need to pass $VERSION since the script fetches the version internally
-          echo "CHECKING FILES"
-          ls 
-          git add .
-          git commit -m "updated version to $VERSION"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/macro6461/queuejs-bfs.git v${{ env.VERSION }}
+
+      - name: Commit and Push Changes
+        run: |
+          git add README.md CHANGELOG.md package.json  # Explicitly add the files you want to commit
+          git commit -m "Updated version to ${{ env.VERSION }}"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/macro6461/queuejs-bfs.git
