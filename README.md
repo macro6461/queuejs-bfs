@@ -98,4 +98,4 @@ function App() {
 export default App;
 ```
 
-**Note: The full example React app can be found in the `example` directory on GitHub.**
+**Note: The full example React app can be found in the `example` directory on [GitHub](https://github.com/macro6461/queuejs-bfs/tree/main/example).**
