@@ -25,12 +25,17 @@ jobs:
           git config --global user.email "mattcroak718@gmail.com"
           git config --global user.name "macro6461"
 
+      - name: Run Python script to get version
+        id: get_version
+        run: |
+          VERSION=$(python ./buildscripts/update_versions.py)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
+
       - name: Run version update script
         run: |
-          python ./buildscripts/update_versions.py
+          python ./buildscripts/update_versions.py  # No need to pass $VERSION since the script fetches the version internally
 
-      - name: Commit and push changes (if applicable)
+      - name: Tag and push changes
         run: |
-          git add .
-          git commit -m "New update for queuejs-bfs"
-          git push origin main  # Or to your desired branch
+          git tag v${{ env.VERSION }}  # Use the version saved in the environment
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-username/your-repository.git v${{ env.VERSION }}
