@@ -18,7 +18,7 @@ jobs:
 
       - name: Run version update script
         run: |
-          python ./update_versions.py
+          python ./buildscripts/update_versions.py
 
       - name: Commit and push changes (if applicable)
         run: |
@@ -42,7 +42,7 @@ jobs:
 
       - name: Run version update script
         run: |
-          python ./tag_repo.py
+          python ./buildscripts/tag_repo.py
 
       - name: Commit and push changes (if applicable)
         run: |
