@@ -4,31 +4,37 @@ import subprocess
 
 def get_git_version():
     try:
-        # Run the `git describe --long` command
-        git_output = subprocess.check_output(["git", "describe", "--long"]).decode("utf-8").strip()
-        
-        # Split the output by "-" and take the first three parts
-        version_parts = git_output.split("-")
+        # Run 'git describe' and capture the output
+        git_output = subprocess.check_output(["git", "describe", "--long"], universal_newlines=True).strip()
+        print(f"Git describe output: {git_output}")
 
+        # Split the version into parts (tag-commits-commitHash)
+        version_parts = git_output.split('-')
+
+        # If the version has 3 parts (tag-commits-commitHash), extract them
         if len(version_parts) == 3:
-            version_parts.append('0')
-        
-        if len(version_parts) < 4:
-            print("Error: Not enough parts in git describe output.")
+            tag = version_parts[0]  # e.g., 1.0.2
+            commits = int(version_parts[1])  # e.g., 1
+            commit_hash = version_parts[2][1:]  # Remove 'g' prefix, e.g., 4869857
+
+            # Check if there were commits since the last tag
+            if commits > 0:
+                # Increment the patch version (you can also change minor or major if needed)
+                tag_parts = tag.split('.')
+                patch_version = int(tag_parts[2]) + 1
+                new_tag = f"{tag_parts[0]}.{tag_parts[1]}.{patch_version}"
+                print(f"New version (after commits): {new_tag}")
+                return new_tag  # Just return the updated version without commits and commit hash
+
+            else:
+                # No commits, version stays the same
+                print(f"Version stays the same: {tag}")
+                return f"{tag}"
+
+        else:
+            print("Unexpected git describe output")
             return None
-        
-        # Split the first part (which is the version) by "." and keep the first three parts
-        version_numbers = version_parts[0].split(".")
-        
-        if len(version_numbers) < 3:
-            print("Error: Version part format incorrect.")
-            return None
-        
-        # Get the major, minor, patch numbers and the commit count
-        version = f"{version_numbers[0]}.{version_numbers[1]}.{int(version_numbers[2]) + int(version_parts[1])}"
-        
-        return version
-    
+
     except subprocess.CalledProcessError as e:
         print(f"Error running git describe: {e}")
         return None
@@ -42,7 +48,7 @@ def update_versions():
         content = file.read()
     
     # Regex or any method to replace version number
-    content = re.sub(r'v\d+\.\d+\.\d+', version, content)
+    content = re.sub(r'v\d+\.\d+\.\d+', 'v'+version, content)
     
     with open('README.md', 'w') as file:
         file.write(content)
@@ -51,7 +57,7 @@ def update_versions():
     with open('CHANGELOG.md', 'r') as file:
         changelog = file.read()
     
-    changelog = re.sub(r'v\d+\.\d+\.\d+', 'v2.0.0', changelog)
+    changelog = re.sub(r'## Version \d+\.\d+\.\d+', f'## Version {version}', changelog, 1)
     
     with open('CHANGELOG.md', 'w') as file:
         file.write(changelog)
@@ -60,7 +66,7 @@ def update_versions():
     with open('package.json', 'r') as file:
         package_data = json.load(file)
     
-    package_data['version'] = '2.0.0'
+    package_data['version'] = version
     
     with open('package.json', 'w') as file:
         json.dump(package_data, file, indent=4)
