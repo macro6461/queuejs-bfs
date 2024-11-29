@@ -59,10 +59,15 @@ def update_versions(version=None):
 
 def tag_repo(tag_name, message=None):
     try:
-        if message:
-            subprocess.run(["git", "tag", "-a", tag_name, "-m", message], check=True)
+        # Check if the tag already exists
+        result = subprocess.run(["git", "tag", "-l", tag_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.stdout.decode("utf-8").strip():
+            print(f"Tag {tag_name} already exists, skipping tag creation.")
         else:
-            subprocess.run(["git", "tag", tag_name], check=True)
+            if message:
+                subprocess.run(["git", "tag", "-a", tag_name, "-m", message], check=True)
+            else:
+                subprocess.run(["git", "tag", tag_name], check=True)
 
         subprocess.run(["git", "push", "origin", tag_name], check=True)
         print(f"Successfully tagged the repository with {tag_name}.")
