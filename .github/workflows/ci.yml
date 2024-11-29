@@ -3,6 +3,9 @@ name: Update Versions, Tag Release, Publish NPM Package
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write # Ensure the bot has write permissions to the repository
+
 jobs:
   update-versions:
     runs-on: ubuntu-latest
@@ -28,7 +31,9 @@ jobs:
       - name: Run Python script to get version
         id: get_version
         run: |
+          echo "HELLO"
           VERSION=$(python ./buildscripts/update_versions.py)
+          echo "WORLD"
           echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
           echo "DEBUG: VERSION=$VERSION"  # Debugging line to check the version value
 
@@ -38,5 +43,4 @@ jobs:
 
       - name: Tag and push changes
         run: |
-          git tag v${{ env.VERSION }}  # Use the version saved in the environment
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/macro6461/queuejs-bfs.git v${{ env.VERSION }}
