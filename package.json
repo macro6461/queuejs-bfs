@@ -1,0 +1,33 @@
+{
+  "name": "queuejs-bfs",
+  "version": "1.0.0",
+  "description": "A package to offer a built-in Queue data structure and Breadth First Search (BFS) method for traversing a graph for JavaScript applications.",
+  "main": "dist/index.js",
+  "type": "module",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "npm run test",
+    "build": "npx tsc"
+  },
+  "keywords": [
+    "data-structure",
+    "queue",
+    "breadth-first-search",
+    "bfs",
+    "javascript"
+  ],
+  "author": "Matthew Croak",
+  "dependencies": {
+    "typescript": "^5.7.2"
+  },
+  "files": [
+    "README.md",
+    "src",
+    "dist",
+    "tsconfig.json",
+    "CHANGELOG.md",
+    "LICENSE"
+  ]
+}
