@@ -38,4 +38,4 @@ jobs:
       - name: Tag and push changes
         run: |
           git tag v${{ env.VERSION }}  # Use the version saved in the environment
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-username/your-repository.git v${{ env.VERSION }}
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/macro6461/queuejs-bfs.git v${{ env.VERSION }}
