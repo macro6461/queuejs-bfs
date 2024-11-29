@@ -30,6 +30,7 @@ jobs:
         run: |
           VERSION=$(python ./buildscripts/update_versions.py)
           echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
+          echo "DEBUG: VERSION=$VERSION"  # Debugging line to check the version value
 
       - name: Run version update script
         run: |
