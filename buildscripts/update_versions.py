@@ -70,7 +70,6 @@ def tag_repo(tag_name, message=None):
                 subprocess.run(["git", "tag", tag_name], check=True)
 
         subprocess.run(["git", "push", "origin", tag_name], check=True)
-        print(f"Successfully tagged the repository with {tag_name}.")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred while tagging the repository: {e}")
 
