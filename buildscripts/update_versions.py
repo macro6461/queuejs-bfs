@@ -9,6 +9,9 @@ def get_git_version():
         
         # Split the output by "-" and take the first three parts
         version_parts = git_output.split("-")
+
+        if len(version_parts) == 3:
+            version_parts.append('0')
         
         if len(version_parts) < 4:
             print("Error: Not enough parts in git describe output.")
