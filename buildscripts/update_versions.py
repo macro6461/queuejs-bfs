@@ -3,41 +3,32 @@ import re
 import subprocess
 
 def get_git_version():
+    # Run the git describe command to get the latest tag and commit count
     try:
-        # Run 'git describe' and capture the output
-        git_output = subprocess.check_output(["git", "describe", "--long"], universal_newlines=True).strip()
-        print(f"Git describe output: {git_output}")
+        result = subprocess.run(['git', 'describe', '--long', '--tags'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        git_output = result.stdout.decode('utf-8').strip()
 
-        # Split the version into parts (tag-commits-commitHash)
-        version_parts = git_output.split('-')
+        # Parse the version string, commit count, and commit hash from the describe output
+        match = re.match(r'(\d+\.\d+\.\d+)-(\d+)-g([a-f0-9]+)', git_output)
 
-        # If the version has 3 parts (tag-commits-commitHash), extract them
-        if len(version_parts) == 3:
-            tag = version_parts[0]  # e.g., 1.0.2
-            commits = int(version_parts[1])  # e.g., 1
-            commit_hash = version_parts[2][1:]  # Remove 'g' prefix, e.g., 4869857
+        if match:
+            version = match.group(1)  # e.g., 1.0.1
+            commit_count = int(match.group(2))  # e.g., 11
 
-            # Check if there were commits since the last tag
-            if commits > 0:
-                # Increment the patch version (you can also change minor or major if needed)
-                tag_parts = tag.split('.')
-                patch_version = int(tag_parts[2]) + 1
-                new_tag = f"{tag_parts[0]}.{tag_parts[1]}.{patch_version}"
-                print(f"New version (after commits): {new_tag}")
-                return new_tag  # Just return the updated version without commits and commit hash
-
-            else:
-                # No commits, version stays the same
-                print(f"Version stays the same: {tag}")
-                return f"{tag}"
-
+            # Increment the patch version
+            version_parts = version.split(".")
+            version_parts[2] = str(int(version_parts[2]) + commit_count)  # Increment patch by commit count
+            new_version = ".".join(version_parts)
+            
+            return new_version
         else:
-            print("Unexpected git describe output")
+            print("Error: Could not parse version string from git describe.")
             return None
 
     except subprocess.CalledProcessError as e:
         print(f"Error running git describe: {e}")
         return None
+        
 
 def update_versions():
 
