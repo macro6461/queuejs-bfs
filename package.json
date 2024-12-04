@@ -1,6 +1,6 @@
 {
     "name": "queuejs-bfs",
-    "version": "1.0.30",
+    "version": "1.0.31",
     "description": "A package to offer a built-in Queue data structure and Breadth First Search (BFS) method for traversing a graph for JavaScript applications.",
     "main": "dist/index.js",
     "type": "module",

@@ -1,4 +1,4 @@
-# queuejs-bfs v1.0.30
+# queuejs-bfs v1.0.31
 
 This package offers Queue support for JavaScript (a language that does not have it's own built-in queue data structure), and associated libraries and frameworks. It also offers a built-in Breadth First Search (BFS) method that can be used for efficient graph node exploration.
 
@@ -97,5 +97,7 @@ function App() {
 
 export default App;
 ```
+
+If you have your own BFS algorithm and just want a quick `Queue` instance, you can simply import `Queue` and use as need be.
 
 **Note: The full example React app can be found in the `example` directory on [GitHub](https://github.com/macro6461/queuejs-bfs/tree/main/example).**
