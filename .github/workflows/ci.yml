@@ -7,44 +7,44 @@ permissions:
   contents: write # Ensure the bot has write permissions to the repository
 
 jobs:
-  update-versions:
+  test:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all commits and tags
+    # steps:
+    #   - name: Checkout Code
+    #     uses: actions/checkout@v3
+    #     with:
+    #       fetch-depth: 0 # Fetch all commits and tags
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3" # You can specify a specific Python version if needed
+    #   - name: Set up Python
+    #     uses: actions/setup-python@v2
+    #     with:
+    #       python-version: "3" # You can specify a specific Python version if needed
 
-      - name: Fetch repo and all tags
-        run: |
-          git fetch
-          git fetch --tags
-          git config --global user.email "mattcroak718@gmail.com"
-          git config --global user.name "macro6461"
+    #   - name: Fetch repo and all tags
+    #     run: |
+    #       git fetch
+    #       git fetch --tags
+    #       git config --global user.email "mattcroak718@gmail.com"
+    #       git config --global user.name "macro6461"
 
-      - name: Run Python script to get version
-        id: get_version
-        run: |
-          VERSION=$(python ./buildscripts/update_versions.py)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
-          echo "DEBUG: VERSION=$VERSION"  # Debugging line to check the version value
+    #   - name: Run Python script to get version
+    #     id: get_version
+    #     run: |
+    #       VERSION=$(python ./buildscripts/update_versions.py)
+    #       echo "VERSION=$VERSION" >> $GITHUB_ENV  # Save the version as an environment variable
+    #       echo "DEBUG: VERSION=$VERSION"  # Debugging line to check the version value
 
-      - name: Check if version is set
-        run: |
-          echo "VERSION=${{ env.VERSION }}"
+    #   - name: Check if version is set
+    #     run: |
+    #       echo "VERSION=${{ env.VERSION }}"
 
-      - name: Run version update script
-        run: |
-          python ./buildscripts/update_versions.py  # No need to pass $VERSION since the script fetches the version internally
+    #   - name: Run version update script
+    #     run: |
+    #       python ./buildscripts/update_versions.py  # No need to pass $VERSION since the script fetches the version internally
 
-      - name: Commit and Push Changes
-        run: |
-          git add README.md CHANGELOG.md package.json  # Explicitly add the files you want to commit
-          git commit -m "Updated version to ${{ env.VERSION }}"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/macro6461/queuejs-bfs.git
+    #   - name: Commit and Push Changes
+    #     run: |
+    #       git add README.md CHANGELOG.md package.json  # Explicitly add the files you want to commit
+    #       git commit -m "Updated version to ${{ env.VERSION }}"
+    #       git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/macro6461/queuejs-bfs.git
