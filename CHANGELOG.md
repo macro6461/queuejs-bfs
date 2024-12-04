@@ -2,7 +2,7 @@
 
 This file tracks released versions with the changes made to this project.
 
-## Version 1.0.33
+## Version 1.0.34
 
 ### Added
 

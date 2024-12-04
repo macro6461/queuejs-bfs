@@ -1,4 +1,4 @@
-# queuejs-bfs v1.0.33
+# queuejs-bfs v1.0.34
 
 This package offers Queue support for JavaScript (a language that does not have it's own built-in queue data structure), and associated libraries and frameworks. It also offers a built-in Breadth First Search (BFS) method that can be used for efficient graph node exploration.
 
