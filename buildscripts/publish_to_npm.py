@@ -51,31 +51,6 @@ def publish_to_npm():
 
     # After publishing, clean up
     print("Initializing cleanup...")
-    clean_up()
-
-
-def clean_up():
-    capture_dir = "buildscripts/react-native-capture"
-    try:
-        os.chdir("..")
-        if os.path.exists(capture_dir):
-            print(f"Removing {capture_dir}...")
-            # Add write permissions to all files and directories before removing
-            for root, dirs, files in os.walk(capture_dir):
-                for d in dirs:
-                    os.chmod(os.path.join(root, d), 0o777)
-                for f in files:
-                    os.chmod(os.path.join(root, f), 0o777)
-            shutil.rmtree(capture_dir)
-            print(f"Successfully removed {capture_dir}")
-        else:
-            print(f"{capture_dir} does not exist. Skipping cleanup.")
-    except Exception as e:
-        print(f"An error occurred during cleanup: {e}")
-        exit(-1)
-    finally:
-        print("Cleanup is finished.")
-
 
 if __name__ == "__main__":
     publish_to_npm()

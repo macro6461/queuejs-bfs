@@ -2,6 +2,12 @@
 
 This file tracks released versions with the changes made to this project.
 
+## Version 1.0.33
+
+### Added
+
+- Added python script to publish code to NPM.
+
 ## Version 1.0.32
 
 ### Changed
