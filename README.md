@@ -1,4 +1,4 @@
-# queuejs-bfs v1.0.35
+# queuejs-bfs v1.0.36
 
 This package offers Queue support for JavaScript (a language that does not have it's own built-in queue data structure), and associated libraries and frameworks. It also offers a built-in Breadth First Search (BFS) method that can be used for efficient graph node exploration.
 
@@ -25,7 +25,28 @@ import { Queue, bfs } from "queuejs-bfs";
 
 ### Queue
 
-Once imported, you can create a `Queue` instance like so...
+Once imported, you can create a `Queue` instance like so.
+
+```javascript
+const queue = new Queue();
+
+queue.enqueue("A");
+queue.enqueue("B");
+queue.enqueue("C");
+
+queue.print();
+
+// > "A"
+// > "B"
+// > "C"
+```
+
+Other methods that are permitted when using a Queue are below.
+
+- `dequeue`: remove the element from the front of the queue.
+- `peek`: View the element at the front of the queue without removing it.
+- `isEmpty`: Quickly determine if the queue itself is empty.
+- `size`: Get the size of the queue.
 
 ### bfs
 

@@ -1,6 +1,5 @@
 import os
 import subprocess
-import shutil
 
 
 def publish_to_npm():
@@ -48,9 +47,6 @@ def publish_to_npm():
     else:
         print("Dry-run failed. Please fix the issues before attempting to publish.")
         exit(-1)
-
-    # After publishing, clean up
-    print("Initializing cleanup...")
 
 if __name__ == "__main__":
     publish_to_npm()

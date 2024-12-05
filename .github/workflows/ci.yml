@@ -1,4 +1,4 @@
-name: Update Versions, Tag Release, Publish NPM Package
+name: Publish to NPM
 
 on:
   workflow_dispatch:
@@ -29,5 +29,4 @@ jobs:
       - name: Run Python script to publish to NPM
         id: publish_npm
         run: |
-          echo "TEST"
           python ./buildscripts/publish_to_npm.py # No need to pass $VERSION since the script fetches the version internally.
