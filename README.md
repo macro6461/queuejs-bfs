@@ -1,4 +1,4 @@
-# queuejs-bfs v1.0.36
+# queuejs-bfs v1.0.37
 
 This package offers Queue support for JavaScript (a language that does not have it's own built-in queue data structure), and associated libraries and frameworks. It also offers a built-in Breadth First Search (BFS) method that can be used for efficient graph node exploration.
 
@@ -11,7 +11,6 @@ To install, you can simply run the below command in your JavaScript, React, Reac
 npm install queuejs-bfs
 
 // using yarn
-
 yarn add queuejs-bfs
 ```
 

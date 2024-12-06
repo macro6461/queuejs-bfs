@@ -1,7 +1,6 @@
 import os
 import subprocess
 
-
 def publish_to_npm():
     print("CHECKING NPM TOKEN!!")
     npm_token = os.getenv("NPM_TOKEN")
